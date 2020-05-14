@@ -1,0 +1,12 @@
+{
+    "body" : {
+        "RxScriptDetail" : {
+            "rxScriptDetailReq" : {
+                "rxscdiDos": "2019-08-19",
+                "rxscdiLocn": 5073,
+                "rxscdiRxNbr": 427,
+                "rxscdiUsrid": "PRGJC1"
+            }
+        }
+    }
+}
