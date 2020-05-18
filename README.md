@@ -56,6 +56,6 @@ Here's a list of all the parameters which can be used in this plugin's configura
 | `enabled` | `true` | Whether this plugin will be applied.
 | `config.method` || SOAP Method for the SOAP request, e.g. `RxScriptDetail`
 | `config.namespace` || The SOAP Namespace, e.g. `DefaultNamespace`
-|`config.remove_attr_tags` <br>*optional* || Remove SOAP response XML Attributes
+| `config.remove_attr_tags` | `false` | Remove SOAP response XML Attributes
 
 
