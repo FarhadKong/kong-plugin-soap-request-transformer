@@ -46,20 +46,29 @@ function SoapTransformerHandler:body_filter(conf)
         return
     end
 
-    -- last piece of body is ready; do the thing
+    -- if bad gateway status recieved return
+    if kong.response.get_status() == 502 then
+        return nil
+    end
+
+    -- last piece of body is ready
     local resp_body = concat(ctx.rt_body_chunks)
 
-    print("=====resp_body=======",resp_body)
-    --handler:new()
-    print("=====handler======",inspect(handler))
+    if not resp_body then
+        return
+    end
+
     local parser = xml2lua.parser(handler)
     parser:parse(resp_body)
-    local t = handler.root["SOAP-ENV:Envelope"]["SOAP-ENV:Body"]
+    local SOAPPrefix = "SOAP-ENV"
+    if string.match(resp_body,"soapenv:Envelope") then
+        SOAPPrefix = "soapenv"
+    end
+
+    local t = handler.root[SOAPPrefix .. ":Envelope"][SOAPPrefix .. ":Body"]
     if conf.remove_attr_tags then
         remove_attr_tags(t)
     end
-
-    --print("=====response======", cjson.encode(t))
 
     ngx.arg[1] = cjson.encode(t)
 

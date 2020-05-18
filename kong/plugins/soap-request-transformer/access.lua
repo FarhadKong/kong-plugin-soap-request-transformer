@@ -1,7 +1,7 @@
 local cjson = require("cjson")
 local soap = require("kong.plugins.soap-request-transformer.soap")
 local kong = kong
-local pretty = require('pl.pretty')
+local inspect = require("inspect")
 local get_raw_body = kong.request.get_raw_body
 local set_raw_body = kong.service.request.set_raw_body
 local pcall = pcall
@@ -57,7 +57,6 @@ local function transform_json_body_into_soap(conf, body, content_length)
     end
 
     local body = parameters.body[conf.method]
-    pretty.dump(body)
     local encode_args = {}
     local root = {}
     parse_entries(body, root)
@@ -91,7 +90,6 @@ local function transform_body(conf)
         set_raw_body(body)
         set_header(CONTENT_LENGTH, #body)
         set_header("content-type", "text/xml;charset=UTF-8")
-        --set_header("SOAPAction", "\"\"")
     end
 end
 
