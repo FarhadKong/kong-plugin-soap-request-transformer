@@ -14,9 +14,9 @@ build = {
       ["kong.plugins.soap-request-transformer.handler"] = "kong/plugins/soap-request-transformer/handler.lua",
       ["kong.plugins.soap-request-transformer.schema"] = "kong/plugins/soap-request-transformer/schema.lua",
       ["kong.plugins.soap-request-transformer.access"] = "kong/plugins/soap-request-transformer/access.lua",
-      ["kong.plugins.soap-request-transformer.soap"] = "kong/plugins/soap-request-transformer/soap.lua",
-      ["kong.plugins.soap-request-transformer.xml2lua"] = "kong/plugins/soap-request-transformer/xml2lua.lua",
-      ["kong.plugins.soap-request-transformer.XmlParser"] = "kong/plugins/soap-request-transformer/XmlParser.lua",
-      ["kong.plugins.soap-request-transformer.xmlhandler.tree"] = "kong/plugins/soap-request-transformer/tree.lua",
+      ["kong.plugins.soap-request-transformer.xml.soap"] = "kong/plugins/soap-request-transformer/xml/soap.lua",
+      ["kong.plugins.soap-request-transformer.xml.xml2lua"] = "kong/plugins/soap-request-transformer/xml/xml2lua.lua",
+      ["kong.plugins.soap-request-transformer.xml.XmlParser"] = "kong/plugins/soap-request-transformer/xml/xmlparser.lua",
+      ["kong.plugins.soap-request-transformer.xml.tree"] = "kong/plugins/soap-request-transformer/xml/tree.lua",
    }
 }

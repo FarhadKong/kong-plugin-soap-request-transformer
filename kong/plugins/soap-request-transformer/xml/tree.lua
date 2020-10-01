@@ -1,5 +1,3 @@
-local inspect = require "inspect"
-
 local function init()
     local obj = {
         root = {},

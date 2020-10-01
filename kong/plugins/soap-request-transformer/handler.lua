@@ -1,10 +1,9 @@
 local access = require("kong.plugins.soap-request-transformer.access")
-local handler = require("kong.plugins.soap-request-transformer.tree")
-local xml2lua = require("kong.plugins.soap-request-transformer.xml2lua")
+local handler = require("kong.plugins.soap-request-transformer.xml.tree")
+local xml2lua = require("kong.plugins.soap-request-transformer.xml.xml2lua")
 local concat = table.concat
 local cjson = require("cjson")
 local kong = kong
-local inspect = require "inspect"
 
 local SoapTransformerHandler = {
     VERSION = "0.0.1",
