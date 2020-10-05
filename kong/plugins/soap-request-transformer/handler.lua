@@ -53,8 +53,8 @@ function SoapTransformerHandler:body_filter(conf)
     -- last piece of body is ready
     local resp_body = concat(ctx.rt_body_chunks)
 
-    if not resp_body then
-        return
+    if not resp_body or resp_body == '' then
+        return nil
     end
 
     local parser = xml2lua.parser(handler)
