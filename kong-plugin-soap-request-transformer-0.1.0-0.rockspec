@@ -8,6 +8,9 @@ description = {
    summary = "This plugin sends request and response logs to Kafka.",
    homepage = "https://github.com/kong/kong-plugin-soap-request-transformer",
 }
+dependencies = {
+   "luaexpat >= 1.1.0-3",
+}
 build = {
    type = "builtin",
    modules = {

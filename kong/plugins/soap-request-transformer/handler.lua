@@ -57,19 +57,23 @@ function SoapTransformerHandler:body_filter(conf)
         return nil
     end
 
-    local parser = xml2lua.parser(handler)
+    kong.log.debug("Response body XML: "..resp_body)
+
+    local xmlHandler = handler:new()
+    local parser = xml2lua.parser( xmlHandler )
     parser:parse(resp_body)
     local SOAPPrefix = "SOAP-ENV"
     if string.match(resp_body,"soapenv:Envelope") then
         SOAPPrefix = "soapenv"
     end
 
-    local t = handler.root[SOAPPrefix .. ":Envelope"][SOAPPrefix .. ":Body"]
+    local t = xmlHandler.root[SOAPPrefix .. ":Envelope"][SOAPPrefix .. ":Body"]
     if conf.remove_attr_tags then
         remove_attr_tags(t)
     end
 
     ngx.arg[1] = cjson.encode(t)
+    kong.log.debug("Response body JSON: "..ngx.arg[1])
 
 end
 
