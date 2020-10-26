@@ -19,7 +19,7 @@ build = {
       ["kong.plugins.soap-request-transformer.access"] = "kong/plugins/soap-request-transformer/access.lua",
       ["kong.plugins.soap-request-transformer.xml.soap"] = "kong/plugins/soap-request-transformer/xml/soap.lua",
       ["kong.plugins.soap-request-transformer.xml.xml2lua"] = "kong/plugins/soap-request-transformer/xml/xml2lua.lua",
-      ["kong.plugins.soap-request-transformer.xml.XmlParser"] = "kong/plugins/soap-request-transformer/xml/XmlParser.lua",
+      ["kong.plugins.soap-request-transformer.xml.xmlparser"] = "kong/plugins/soap-request-transformer/xml/xmlparser.lua",
       ["kong.plugins.soap-request-transformer.xml.tree"] = "kong/plugins/soap-request-transformer/xml/tree.lua",
    }
 }
