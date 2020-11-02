@@ -48,14 +48,14 @@ $ curl -X POST http://kong:8001/{service id}/plugins \
 
 Here's a list of all the parameters which can be used in this plugin's configuration:
 
-| Form Parameter | default | description
-|----------------|---------|-------------
-| `name`|| The name of the plugin to use, in this case: `soap-request-transformer`.
-| `service_id`|| The id of the Service which this plugin will target.
-| `route_id` || The id of the Route which this plugin will target.
-| `enabled` | `true` | Whether this plugin will be applied.
-| `config.method` || SOAP Method for the SOAP request, e.g. `RxScriptDetail`
-| `config.namespace` || The SOAP Namespace, e.g. `DefaultNamespace`
-| `config.remove_attr_tags` | `false` | Remove SOAP response XML Attributes
+| Form Parameter | default | description |
+|----------------|---------|-------------|
+| `name`|| The name of the plugin to use, in this case: `soap-request-transformer`.|
+| `service_id`|| The id of the Service which this plugin will target.|
+| `route_id` || The id of the Route which this plugin will target.|
+| `enabled` | `true` | Whether this plugin will be applied.|
+| `config.method` || SOAP Method for the SOAP request, e.g. `RxScriptDetail`|
+| `config.namespace` || The SOAP Namespace, e.g. `DefaultNamespace`|
+| `config.remove_attr_tags` | `false` | Remove SOAP response XML Attributes|
 
 
