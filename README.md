@@ -43,6 +43,7 @@ $ curl -X POST http://kong:8001/{service id}/plugins \
     --data "config.method=RxScriptDetail" \
     --data "config.namespace=DefaultNamespace" \
     --data "config.remove_attr_tags=false"
+```
 
 ### Parameters
 
