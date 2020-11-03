@@ -1,9 +1,16 @@
 local access = require("kong.plugins.soap-request-transformer.access")
-local handler = require("kong.plugins.soap-request-transformer.xml.tree")
-local xml2lua = require("kong.plugins.soap-request-transformer.xml.xml2lua")
+local kong = kong
+local get_raw_body = kong.request.get_raw_body
+local set_raw_body = kong.service.request.set_raw_body
+local get_header = kong.request.get_header
+local set_header = kong.service.request.set_header
+local handler = require("xmlhandler.tree")
+local xml2lua = require("xml2lua")
 local concat = table.concat
 local cjson = require("cjson")
-local kong = kong
+
+local CONTENT_TYPE = "content-type"
+local CONTENT_LENGTH = "content-length"
 
 local SoapTransformerHandler = {
     VERSION = "0.0.1",
@@ -21,8 +28,34 @@ local function remove_attr_tags(e)
     end
 end
 
+function SoapTransformerHandler.convertXMLtoJSON(xml, conf)
+    local xmlHandler = handler:new()
+    local parser = xml2lua.parser( xmlHandler )
+    parser:parse(xml)
+    local SOAPPrefix = "SOAP-ENV"
+    if string.match(xml,"soapenv:Envelope") then
+        SOAPPrefix = "soapenv"
+    end
+
+    local t = xmlHandler.root[SOAPPrefix .. ":Envelope"][SOAPPrefix .. ":Body"]
+    if conf.remove_attr_tags then
+        remove_attr_tags(t)
+    end
+
+    return cjson.encode(t)
+end
+
 function SoapTransformerHandler:access(conf)
-    access.execute(conf)
+    local body = get_raw_body()
+    -- local content_length = (body and #body) or 0
+    local is_body_transformed, body = access.transform_body(conf, body,get_header(CONTENT_TYPE))
+
+    if is_body_transformed then
+        set_raw_body(body)
+        set_header(CONTENT_LENGTH, #body)
+        set_header(CONTENT_TYPE, "text/xml;charset=UTF-8")
+    end
+
 end
 
 function SoapTransformerHandler:header_filter(conf)
@@ -59,20 +92,10 @@ function SoapTransformerHandler:body_filter(conf)
 
     kong.log.debug("Response body XML: "..resp_body)
 
-    local xmlHandler = handler:new()
-    local parser = xml2lua.parser( xmlHandler )
-    parser:parse(resp_body)
-    local SOAPPrefix = "SOAP-ENV"
-    if string.match(resp_body,"soapenv:Envelope") then
-        SOAPPrefix = "soapenv"
-    end
+    kong.log.debug("Response body type: "..type(resp_body))
 
-    local t = xmlHandler.root[SOAPPrefix .. ":Envelope"][SOAPPrefix .. ":Body"]
-    if conf.remove_attr_tags then
-        remove_attr_tags(t)
-    end
-
-    ngx.arg[1] = cjson.encode(t)
+    ngx.arg[1] = self.convertXMLtoJSON(resp_body, conf)
+    
     kong.log.debug("Response body JSON: "..ngx.arg[1])
 
 end

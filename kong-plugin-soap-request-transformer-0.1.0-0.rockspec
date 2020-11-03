@@ -9,7 +9,8 @@ description = {
    homepage = "https://github.com/kong/kong-plugin-soap-request-transformer",
 }
 dependencies = {
-   "luaexpat >= 1.1.0-3",
+   "xml2lua = 1.4-3",
+   "luasoap = 4.0.2-1",
 }
 build = {
    type = "builtin",
@@ -17,9 +18,5 @@ build = {
       ["kong.plugins.soap-request-transformer.handler"] = "kong/plugins/soap-request-transformer/handler.lua",
       ["kong.plugins.soap-request-transformer.schema"] = "kong/plugins/soap-request-transformer/schema.lua",
       ["kong.plugins.soap-request-transformer.access"] = "kong/plugins/soap-request-transformer/access.lua",
-      ["kong.plugins.soap-request-transformer.xml.soap"] = "kong/plugins/soap-request-transformer/xml/soap.lua",
-      ["kong.plugins.soap-request-transformer.xml.xml2lua"] = "kong/plugins/soap-request-transformer/xml/xml2lua.lua",
-      ["kong.plugins.soap-request-transformer.xml.XmlParser"] = "kong/plugins/soap-request-transformer/xml/XmlParser.lua",
-      ["kong.plugins.soap-request-transformer.xml.tree"] = "kong/plugins/soap-request-transformer/xml/tree.lua",
    }
 }
