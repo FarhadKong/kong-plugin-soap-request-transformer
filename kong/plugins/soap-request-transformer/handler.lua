@@ -49,7 +49,6 @@ end
 
 function SoapTransformerHandler:access(conf)
     local body = get_raw_body()
-    -- local content_length = (body and #body) or 0
     local is_body_transformed, body = access.transform_body(conf, body,get_header(CONTENT_TYPE))
 
     if is_body_transformed then

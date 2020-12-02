@@ -30,7 +30,6 @@ end
 
 local function transform_json_body_into_soap(conf, body)
     local parameters = parse_json(body)
-    -- print("Parameters conf method" .. parameters.body[conf.method])
     if parameters == nil then
         return false, nil
     end
@@ -50,8 +49,6 @@ local function transform_json_body_into_soap(conf, body)
 end
 
 function _M.transform_body(conf, body, content_type)
-    -- local body = get_raw_body()
-    -- local content_length = (body and #body) or 0
     local is_body_transformed = false
 
     if content_type == JSON then
@@ -60,9 +57,5 @@ function _M.transform_body(conf, body, content_type)
 
     return is_body_transformed, body
 end
-
--- function _M.execute(conf)
---     transform_body(conf)
--- end
 
 return _M
