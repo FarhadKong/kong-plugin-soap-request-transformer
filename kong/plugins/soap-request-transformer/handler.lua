@@ -28,6 +28,8 @@ local function remove_attr_tags(e)
     end
 end
 
+
+
 function SoapTransformerHandler.convertXMLtoJSON(xml, conf)
     local xmlHandler = handler:new()
     local parser = xml2lua.parser( xmlHandler )
@@ -91,13 +93,8 @@ function SoapTransformerHandler:body_filter(conf)
     end
 
     kong.log.debug("Response body XML: "..resp_body)
-
-    kong.log.debug("Response body type: "..type(resp_body))
-
     ngx.arg[1] = self.convertXMLtoJSON(resp_body, conf)
-    
     kong.log.debug("Response body JSON: "..ngx.arg[1])
-
 end
 
 

@@ -10,7 +10,7 @@ description = {
 }
 dependencies = {
    "xml2lua = 1.4-3",
-   "luasoap = 4.0.2-1",
+   "luaexpat >= 1.1.0-3",
 }
 build = {
    type = "builtin",
@@ -18,5 +18,6 @@ build = {
       ["kong.plugins.soap-request-transformer.handler"] = "kong/plugins/soap-request-transformer/handler.lua",
       ["kong.plugins.soap-request-transformer.schema"] = "kong/plugins/soap-request-transformer/schema.lua",
       ["kong.plugins.soap-request-transformer.access"] = "kong/plugins/soap-request-transformer/access.lua",
+      ["kong.plugins.soap-request-transformer.soap"] = "kong/plugins/soap-request-transformer/soap.lua",
    }
 }

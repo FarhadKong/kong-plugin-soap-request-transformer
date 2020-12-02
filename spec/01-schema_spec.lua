@@ -19,7 +19,9 @@ describe(PLUGIN_NAME .. ": (schema)", function()
     local ok, err = validate({
         method = "mySoapMethod",
         namespace = "mysoapnamespace",
-        remove_attr_tags = true
+        remove_attr_tags = true,
+        soap_version = "1.1",
+        soap_prefix = "soapenv"
       })
     assert.is_nil(err)
     assert.is_truthy(ok)

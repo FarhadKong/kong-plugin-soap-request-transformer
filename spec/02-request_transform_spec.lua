@@ -15,6 +15,8 @@ local request_transformer = require "kong.plugins.soap-request-transformer.acces
         config.method = "RxScriptDetail"
         config.namespace = "DefaultNamespace"
         config.remove_attr_tags = false
+        config.soap_prefix = "soapenv"
+        config.soap_version = "1.2"
 
         local json = [[{
         "body" : {
@@ -33,12 +35,8 @@ local request_transformer = require "kong.plugins.soap-request-transformer.acces
         print("Request body XML: "..txbody)
 
 
-        -- validate that the request succeeded, response status 200
-        assert.equal("test", "test")
-        -- now check the request (as echoed by mockbin) to have the header
-        -- local header_value = assert.request(r).has.header("hello-world")
-        -- validate the value of that header
-        -- assert.equal("this is on a request", header_value)
+
+
       end)
     end)
   end)

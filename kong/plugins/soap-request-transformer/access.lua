@@ -1,8 +1,7 @@
 local cjson = require("cjson")
-local soap = require("soap")
+local soap = require("kong.plugins.soap-request-transformer.soap")
 local kong = kong
 local pcall = pcall
-local str_find = string.find
 local JSON = "application/json"
 local insert = table.insert
 local _M = {}
@@ -43,7 +42,8 @@ local function transform_json_body_into_soap(conf, body)
     encode_args.namespace = conf.namespace
     encode_args.method = conf.method
     encode_args.entries = root
-
+    encode_args.soap_prefix = conf.soap_prefix
+    encode_args.soap_version = conf.soap_version
     local soap_doc = soap.encode(encode_args)
     kong.log.debug("Transformed request: "..soap_doc)
     return true, soap_doc
