@@ -42,7 +42,8 @@ $ curl -X POST http://kong:8001/{service id}/plugins \
     --data "name=soap-request-transformer" \
     --data "config.method=RxScriptDetail" \
     --data "config.namespace=DefaultNamespace" \
-    --data "config.remove_attr_tags=false"
+    --data "config.remove_attr_tags=false" \
+    --data "config.soap_prefix=soapenv"
 ```
 
 ### Parameters
@@ -58,5 +59,6 @@ Here's a list of all the parameters which can be used in this plugin's configura
 | `config.method` || SOAP Method for the SOAP request, e.g. `RxScriptDetail`|
 | `config.namespace` || The SOAP Namespace, e.g. `DefaultNamespace`|
 | `config.remove_attr_tags` | `false` | Remove SOAP response XML Attributes|
+| `config.soap_prefix` | `soap` | Set the soap prefix for picky parsers|
 
 

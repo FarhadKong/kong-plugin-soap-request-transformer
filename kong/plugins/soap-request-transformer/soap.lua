@@ -139,22 +139,7 @@ local function insert_header (obj, header)
 	end
 end
 
-local envelope_template = {
-	tag = "soap:Envelope",
-	attr = { "xmlns:soap", "soap:encodingStyle", "xmlns:xsi", "xmlns:xsd",
-		["xmlns:soap"] = nil, -- to be filled
-		["soap:encodingStyle"] = "http://schemas.xmlsoap.org/soap/encoding/",
-		["xmlns:xsi"] = "http://www.w3.org/2001/XMLSchema-instance",
-		["xmlns:xsd"] = "http://www.w3.org/2001/XMLSchema",
-	},
-	{
-		tag = "soap:Body",
-		[1] = {
-			tag = nil, -- must be filled
-			attr = {}, -- must be filled
-		},
-	}
-}
+
 local xmlns_soap = "http://schemas.xmlsoap.org/soap/envelope/"
 local xmlns_soap12 = "http://www.w3.org/2003/05/soap-envelope"
 
@@ -167,17 +152,36 @@ local xmlns_soap12 = "http://www.w3.org/2003/05/soap-envelope"
 -- header: Table describing the header of the SOAP envelope (optional);
 -- internal_namespace: String with the optional namespace used
 --	as a prefix for the method name (default = "");
--- soapversion: Number of SOAP version (default = 1.1);
+-- soap_version: Number of SOAP version (default = 1.1);
 -- @return String with SOAP envelope element.
 ---------------------------------------------------------------------
 local function encode (args)
 	local tae = type (args.entries)
-	assert (tae == "table", "Invalid field entries: expected table but got "..tae)
-	if tonumber(args.soapversion) == 1.2 then
-		envelope_template.attr["xmlns:soap"] = xmlns_soap12
-	else
-		envelope_template.attr["xmlns:soap"] = xmlns_soap
+    assert (tae == "table", "Invalid field entries: expected table but got "..tae)
+    local soap_prefix = args.soap_prefix == nil and "soap" or args.soap_prefix
+
+    local namespace = xmlns_soap
+    if tonumber(args.soap_version) == 1.2 then
+		namespace = xmlns_soap12
 	end
+
+    local envelope_template = {
+        tag = soap_prefix .. ":Envelope",
+        attr = { "xmlns:" .. soap_prefix, soap_prefix .. ":encodingStyle", "xmlns:xsi", "xmlns:xsd",
+            ["xmlns:" .. soap_prefix] = namespace,
+            [soap_prefix .. ":encodingStyle"] = "http://schemas.xmlsoap.org/soap/encoding/",
+            ["xmlns:xsi"] = "http://www.w3.org/2001/XMLSchema-instance",
+            ["xmlns:xsd"] = "http://www.w3.org/2001/XMLSchema",
+        },
+        {
+            tag = soap_prefix .. ":Body",
+            [1] = {
+                tag = nil, -- must be filled
+                attr = {}, -- must be filled
+            },
+        }
+    }
+
 	local xmlns = "xmlns"
 	local method = args.method
 	if args.internal_namespace then
@@ -259,7 +263,7 @@ end
 return {
 	_COPYRIGHT = "Copyright (C) 2004-2020 Kepler Project",
 	_DESCRIPTION = "LuaSOAP provides a very simple API that convert Lua tables to and from XML documents",
-	_VERSION = "LuaSOAP 4.0",
+	_VERSION = "LuaSOAP 4.0.2",
 
 	decode = decode,
 	encode = encode,
