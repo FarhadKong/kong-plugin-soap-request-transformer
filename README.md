@@ -1,3 +1,5 @@
+NOTE:  This is a copy/clone of the Kong private repo and should be used for reference purposes only  
+
 # Kong SOAP Transformer Plugin
 
 This plugin transformers a JSON request into a SOAP XML request, and then transforms corresponding SOAP XML response
